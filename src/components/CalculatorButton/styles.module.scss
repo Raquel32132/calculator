@@ -1,0 +1,28 @@
+.button {
+    width: 5rem;
+    height: 5rem;
+
+    border: none;
+    border-radius: 6px;
+
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 700;
+    font-size: 1.3rem;
+
+    background: rgba(255, 255, 255, 0.493);
+    transition: background 0.2s;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+.button:hover {
+    background: rgba(255, 255, 255, 0.664);
+}
+
+.button:active {
+    background: rgb(255, 255, 255);
+}
