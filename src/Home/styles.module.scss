@@ -1,9 +1,35 @@
 .container {
     height: 100vh;
     width: 100%;
+
     display: flex;
+    flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
+
+    gap: 2rem;
+}
+
+.identificationButton {
+    width: 25rem;
+    height: 3rem;
+
+    border: 1px solid white;
+    border-radius: 8px;
+
+    font-weight: 500;
+    font-size: 1rem;
+
+    background: rgba(255, 255, 255, 0.493);
+    transition: background 0.2s;
+}
+
+.identificationButton:hover {
+    background: rgba(255, 255, 255, 0.664);
+}
+
+.identificationButton:active {
+    background: rgb(255, 255, 255);
 }
 
 .calculator{
@@ -19,19 +45,21 @@
     padding: 2rem;
     gap: 1rem;
 
-    span {
+    input {
         width: 100%;
         height: 5rem;
         
-        display: flex;
-        justify-content: end;
-        align-items: center;
+        text-align: right;
+
         padding: 1rem;
 
         font-family: 'Roboto Mono', monospace;
         font-size: 2rem;
         border-radius: 6px;
         background: rgba(0, 0, 0, 0.466);
+
+        border: none;
+        color: var(--gray-100);
     }
     
     div {

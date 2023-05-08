@@ -2,26 +2,57 @@ import { useEffect, useState } from 'react';
 import { NumberOne, NumberTwo, NumberThree, NumberFour, NumberFive, NumberSix, NumberSeven, NumberEight, NumberNine, NumberZero, X, Plus, Minus, Divide, Equals, Backspace } from 'phosphor-react';
 import { CalculatorButton } from '../components/CalculatorButton';
 
+
+
 import clickSound from '../assets/mixkit-modern-technology-select-3124.wav'
 import styles from './styles.module.scss';
 
+
+interface Data {
+  name: string;
+  course: string;
+  registration: string;
+}
+
+
 export function Home() {
   const [calc, setCalc] = useState<string>('');
-  
+  const [identification, setIdentification] = useState<Data>();
+
   const audio = new Audio(clickSound);
 
+
+  const fetchIdentification = async () => {
+    const response = await fetch('/identification.json');
+    const data = await response.text();
+    setIdentification(JSON.parse(data));
+  }
+
+  const handleClick = async () => {
+    await fetchIdentification();
+    if (identification) {
+      alert(`Name: ${identification.name}\nCourse: ${identification.course}\nRegistration: ${identification.registration}`);
+    }
+  }
+
+
   useEffect(() => {
+
     function handleKeyDown(event: KeyboardEvent) {
       if (/^\d$/.test(event.key)) { 
         setCalc(calc + event.key); 
       } else if (event.key === 'Backspace') {
         setCalc(calc.slice(0, -1)); 
+      } else if (event.key === 'Enter') {
+        handleEquals();
+        event.preventDefault();
+        event.stopPropagation();
       }
     }
+
     audio.play()
-
     document.body.addEventListener('keydown', handleKeyDown);
-
+  
     return () => {
       document.body.removeEventListener('keydown', handleKeyDown);
     };
@@ -89,14 +120,16 @@ export function Home() {
 
   return (
     <div className={styles.container}>
+      <button onClick={handleClick} className={styles.identificationButton}>
+        Clique em mim!
+      </button>
+
       <div className={styles.calculator}>
-        <span>
-          { calc !== '' ?
-            calc.slice(0, 16)
-            :
-            'Calculator'
-          }
-        </span>
+      <input
+          type="text"
+          value={calc !== '' ? calc.slice(0, 16) : 'Calculator'}
+          onChange={(e) => setCalc(e.target.value)}
+        />
 
         <div>
           <CalculatorButton character='AC' onClick={() => setCalc('')}/>
